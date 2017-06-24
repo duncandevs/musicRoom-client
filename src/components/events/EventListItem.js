@@ -14,7 +14,6 @@ export default class EventListItem extends Component {
     return (
       <div>
         <Link to={`/events/${id}`}><h3>{name}</h3></Link>
-        <h3>{id}</h3>
       </div>
     )
   }

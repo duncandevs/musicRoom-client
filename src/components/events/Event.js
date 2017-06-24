@@ -2,52 +2,68 @@ import React , { Component } from 'react'
 import { Route } from 'react-router-dom'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
-import TrackSearchContainer from '../search/TrackSearchContainer'
-import { getToken } from '../Helpers'
+import { getToken, getArtistsInfoByArtistId, getArtistTopTracks } from '../Helpers'
+import InfoWrapper from './info/InfoWrapper'
+import PlaylistWrapper from './playlist/PlaylistWrapper'
+import ChatWrapper from './chat/ChatWrapper'
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
+
 class Event extends Component {
   constructor(props){
     super(props)
     this.state = {
-      uri: '',
-      playlistOwner: {},
-      token:''
+      playlist: {},
+      token:'',
+      artistSpotifyId:'',
+      artistImg: '',
+      topTracks: []
     }
   }
 
-  fetchEvent(){
-    return axios('http://localhost:3000'+this.props.match.url)
-  }
-
-  setInitialState(){
-    this.fetchEvent().then((res)=>{
-      let playlist = res.data.playlists[0]
-      getToken(playlist.user_id).then((res)=>{
+  updateInfo(artistSpotifyId){
+    getArtistsInfoByArtistId(this.props.token,artistSpotifyId).then((artist)=>{
+      getArtistTopTracks(this.props.token, artistSpotifyId).then((tops)=>{
         this.setState({
-          uri:  playlist.embed_uri,
-          playlistOwner: {
-            user_id: playlist.user_id,
-            spotifyPlaylistId: playlist.spotifyId,
-            spotifyUserId: playlist.embed_uri.split(':')[2]
-          },
-          token: res.data.token
+          artistImg: artist.images[0].url,
+          topTracks: tops.tracks,
+          artistSpotifyId: artistSpotifyId
         })
       })
     })
   }
 
+  newArtistSpotifyId(id){
+    this.updateInfo(id)
+  }
+
   componentDidMount(){
-    this.setInitialState()
+    this.props.fetchEvent(this.props.match.url)
+  }
+
+  componentDidUpdate(){
+    if(this.props.token == '' || this.props.token == null || this.props.token == undefined){
+      if(this.props.eventHost != {}){
+        this.props.setToken(this.props.eventHost.id)
+      }
+    } else {
+      sessionStorage.token = this.props.token
+    }
   }
 
   render(){
     return (
-      <div>
-        <h2>Events Page</h2>
-        <iframe src={`https://open.spotify.com/embed?uri=${this.state.uri}`} width="600" height="380" frameborder="0" allowtransparency="true"/>
-        <TrackSearchContainer playlistOwner={this.state.playlistOwner} token={this.state.token}/>
+      <div className='EventWrapper'>
+        <InfoWrapper artistSpotifyId={this.state.artistSpotifyId} artistImg={this.state.artistImg} topTracks={this.state.topTracks}/>
+        <PlaylistWrapper newArtistSpotifyId={this.newArtistSpotifyId.bind(this)}/>
+        <ChatWrapper/>
       </div>
     )
   }
 }
 
-export default withRouter(Event)
+const mapStateToProps = (state)=>{
+  return {event:state.event, eventHost:state.eventHost, token:state.token, user:state.user}
+}
+
+export default connect(mapStateToProps,actions)(withRouter(Event))

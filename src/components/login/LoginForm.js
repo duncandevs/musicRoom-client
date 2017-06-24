@@ -53,7 +53,7 @@ class LoginForm extends Component {
           <label>Username</label>
           <input type='text' name='username' onChange={this.handleChange.bind(this)} value={this.state.username}/>
           <label>Password</label>
-          <input type='text' name='password' onChange={this.handleChange.bind(this)} value={this.state.password}/>
+          <input type='text' name='password' type='password' onChange={this.handleChange.bind(this)} value={this.state.password}/>
           <input type='submit'/>
         </form>
       </div>

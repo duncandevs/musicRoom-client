@@ -65,7 +65,7 @@ export default class EventForm extends Component {
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div><label>name your event</label></div>
           <input type = 'text' onChange = {this.handleChange.bind(this)} value = {this.state.name}/>
-          <input type = 'submit' onSubmit = {this.handleSubmit.bind(this)}/>
+          <input type = 'submit' onSubmit = {this.handleSubmit.bind(this)} className='btn btn-primary new-event-btn' value='create'/>
         </form>
       </div>
     )

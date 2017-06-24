@@ -1,5 +1,208 @@
-body {
+html, body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  height: 100%;
+}
+body{
+  background-color: white;
+}
+.EventWrapper{
+  margin: 0 auto;
+  height: 100%;
+}
+/*Info Section*/
+.InfoWrapper{
+  /*float:left;*/
+  max-height: 900px;
+}
+.info-content-wrap{
+  height:283px;
+  background-color:black;
+}
+.leftnavlogo{
+  height:72px;
+  background-color:black;
+}
+.leftnavlogo-text{
+  font-weight:bold;
+  color:white;
+  font-size:20px;
+  margin-top:12px;
+}
+.info-img{
+  margin-left:-25px;
+}
+.info-img-wrap{
+  height:450px;
+  background-color:black;
+}
+.top-tracks-title{
+  font-size:20px;
+  font-weight:bold;
+  color:white;
+}
+.top-track-item{
+  color:white;
+  margin-top:11px;
+}
+
+/*player*/
+.player-container {
+  height:300px;
+background: rgba(0, 0, 0, 0) linear-gradient(181.402deg, rgb(0, 187, 255) 0%, rgb(255, 255, 255) 100%) repeat scroll 0% 0% / auto padding-box border-box
+}
+.playernav{
+  padding-top:80px;
+}
+.playerbtn{
+  float:left;
+}
+.searchlist-container{
+  height:720px;
+  overflow-y: scroll;
+}
+.addTrackBtn{
+}
+.top-player-nav{
+  padding-top:15px;
+  background-color:#3498db;
+  height:72px;
+}
+/*.search*/
+/*.search-container{
+  height:72px;
+}*/
+.search-text{
+  margin-top:20px;
+  font-size:20px;
+  color:#707070;
+}
+.search-input{
+  width:360px;
+  height:40px;
+  margin-right:10px;
+  border-radius:4px;
+}
+.search-btn{
+}
+.track-search-form{
+}
+.player-toggle-btn{
+}
+/*Playlist Section*/
+.PlaylistWrapper{
+  height:800px;
+  float:left;
+  background-color: white;
+}
+/*.queudPlaylist*/
+.QueuedTracksList{
+  height:410px;
+  overflow-y:scroll;
+}
+/*<.table styling>*/
+
+  table {
+    border-collapse: collapse;
+    width:100%;
+  }
+  table, th, td {
+    border-bottom: 1px solid gray;
+    background-color:white;
+  }
+  th, td {
+       text-align: center !important;
+       color: black;
+       padding: 10px !important;
+   }
+
+/*Chat Section*/
+.ChatWrapper{
+  height:800px;
+  float:left;
+  background: rgba(0, 0, 0, 0) linear-gradient(180.114deg, rgb(167, 0, 179) 0%, rgb(255, 255, 255) 100%) repeat scroll 0% 0% / auto padding-box border-box;
+}
+.chat-panel-nav{
+  height:72px;
+  background-color:white;
+  border-left:1em;
+  border-color:'black';
+}
+.chatnavtext{
+  margin-top:20px;
+  font-size:20px;
+}
+/*chat styling*/
+.chat-msg-wrapper{
+  height:500px;
+  padding-top:20px;
+  padding-left:12%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.chat-msg{
+  /*height:60px;*/
+  margin-top:20px;
+}
+.chat-msg-profile-pic{
+  float:left;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+}
+.chat-msg-text{
+  padding-top:20px;
+  padding-left:10px;
+  padding-right:10px;
+  padding-bottom:20px;
+  max-width:240px;
+  margin-left:12px;
+  font-size:12px;
+  float:left;
+  background-color:white;
+  border-radius:10px;
+}
+.chat-tab-container{
+  height:50px;
+  background-color:#00ff77;
+  padding:10px;
+}
+.chat-tab-text{
+  color:white;
+}
+.chat-input{
+  width:100%;
+  height:180px;
+}
+.chat-username{
+  float:left;
+  font-size:12px;
+}
+/*invite*/
+.invite-title{
+  margin-top:170px;
+  font-size:30px;
+  color:black;
+  font-weight:bold;
+}
+.invite-form{
+  margin-top:20px;
+  padding:40px;
+}
+.invite-label{
+  margin-right:40px;
+}
+.invite-submit{
+  margin-left:200px;
+}
+.invite-prompt{
+  margin-top:80px;
+  color:#DCDCDC;
+}
+/*user*/
+.user-spotify-login{
+  margin-top:120px;
+}
+.new-event-btn{
+  margin-left:10px;
 }

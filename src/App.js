@@ -17,16 +17,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Test />
-        <Link to='/users/new'><p> new user </p></Link>
-        <Link to='/login'><p>login</p></Link>
         <Switch>
-          <Route path ='/test' render = {()=> <div>test</div> }/>
+          <Route exact path='/' render={()=><div><Link to='/users/new'><p> new user </p></Link><Link to='/login'><p>login</p></Link></div>}/>
           <Route path ='/users/new' render = { ()=> <UserForm/> }/>
           <Route path ='/users/:user_id' render = { ()=> <User/> }/>
           <Route path ='/login' render = {()=> <LoginForm/>}/>
           <Route path = '/token' render = { ()=> <Token/> }/>
-          <Route exact path = '/events/:id' render = {() => <Event event/>}/>
+          <Route path = '/events/:id' render = {() => <Event event/>}/>
           <Route path = '/invite' render={()=><InviteLandingPage/>}/>
         </Switch>
       </div>

@@ -8,6 +8,8 @@ import EventsList from '../events/EventsList'
 import Token from '../Token'
 import LoginSpotify from '../LoginSpotify'
 import { getToken, isLoggedin, getTrack, getUserPlaylists, createUserPlaylist, addTracksToPlaylist} from '../Helpers'
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
 
 
 class User extends Component {
@@ -66,13 +68,8 @@ class User extends Component {
   }
 
   componentDidMount(){
-    // remove hard code on the play list name
-    const playlistName = 'flatironSpotify'
-    const user_id = 'dmaina92'
-    // each playlist id is associated with an instance of a new event
-    const playlist_id = '5PDMuGrM98DFletxpopw3B'
-    //coming from get tracks
-    const uris = ["spotify:track:5brMyscUnQg14hMriS91ks",'spotify:track:4KW1lqgSr8TKrvBII0Brf8','spotify:track:6C7RJEIUDqKkJRZVWdkfkH',"spotify:track:19a3JfW8BQwqHWUMbcqSx8","spotify:track:3nAq2hCr1oWsIU54tS98pL"]
+    //TODO: set the user properties using redux
+    // this.props.setUser(this.props.match.url)
 
     this.getUser(this.props.match.url).then((res)=>{
       this.setUserState(res.data)
@@ -83,18 +80,13 @@ class User extends Component {
       })
     })
 
-    getToken(sessionStorage.id).then((res) => {
-      sessionStorage.token = res.data.token
-    })
-
-    // let token = sessionStorage.token
-    // getTrack('kanye',token).then((res)=> console.log(res))
-    // getUserPlaylists(token).then((res)=>console.log(res))
-    // addTracksToPlaylist(token,user_id, playlist_id,uris).then((res)=>console.log('adding tracks: ',res))
+    // getToken(sessionStorage.id).then((res) => {
+    //   sessionStorage.token = res.data.token
+    // })
   }
 
   render(){
-    const scopes = 'playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative'
+    const scopes = 'playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative user-read-recently-played user-read-private streaming user-modify-playback-state user-read-playback-state'
     const client_id = 'd2a6a11d756a4c4da594170cd80f425e'
     const redirect_uri = 'http://localhost:3000/spotify'
     const path = 'https://accounts.spotify.com/authorize' +
@@ -104,10 +96,7 @@ class User extends Component {
       '&redirect_uri=' + encodeURIComponent(redirect_uri)
     const userDisplay =
           <div>
-            <h2>username: {this.state.username}</h2>
-            <h2>name: {this.state.name}</h2>
-            <a href = { path }>login to spotify</a>
-
+            <div className='user-spotify-login'><a href = { path } >login to spotify</a></div>
             <EventsList events={this.state.events}/>
             <Link to={`/users/${this.state.user_id}/events/new`}><p>new event</p></Link>
             <Switch>
@@ -125,4 +114,4 @@ class User extends Component {
   }
 }
 
-export default withRouter(User)
+export default withRouter(connect(()=>{},actions)(User))
