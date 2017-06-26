@@ -13,8 +13,6 @@ class Event extends Component {
   constructor(props){
     super(props)
     this.state = {
-      playlist: {},
-      token:'',
       artistSpotifyId:'',
       artistImg: '',
       topTracks: []

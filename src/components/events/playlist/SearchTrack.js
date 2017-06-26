@@ -1,17 +1,15 @@
 import React, {Component} from 'react'
 import { addTracksToPlaylist, getToken } from '../../Helpers'
 import { connect } from 'react-redux'
+import * as actions from '../../../actions'
 
 function SearchTrack(props){
   const { track } = props
 
   var handleClick = function(){
-    //TODO: handle tracks from the event
-    //get the track event.id and send it over in the request
-    //use the event id to set an association in the back extends
-    //get all tracks with a specific route that grabs all the event tracks and sets them to the queried list
     addTracksToPlaylist(props.token,props.playlist.spotifyUserId, props.playlist.spotifyPlaylistId,[props.track.uri]).then(
-      props.addTrackToQueuedTracksList(track)
+      // props.addTrackToQueuedTracksList(track)
+      props.updateArtistInfo({token:props.token,artistSpotifyId:track.artistSpotifyId})
     )
   }
 
@@ -29,4 +27,31 @@ const mapStateToProps = (state) => {
   return {token: state.token, event:state.event}
 }
 
-export default connect(mapStateToProps)(SearchTrack)
+export default connect(mapStateToProps,actions)(SearchTrack)
+
+// // TODO: refactor the add track to queud track list state
+// addTrackToQueuedTracksList(track){
+//   this.props.newArtistSpotifyId(track.artistSpotifyId)
+//   addTrackToDB(track).then((res)=>{
+//     this.setState({
+//       queuedTracks: [...this.state.queuedTracks,res.data]
+//     })
+//   })
+// }
+//
+// newArtistSpotifyId(id){
+//   this.updateInfo(id)
+// }
+//
+//
+// updateInfo(artistSpotifyId){
+//   getArtistsInfoByArtistId(this.props.token,artistSpotifyId).then((artist)=>{
+//     getArtistTopTracks(this.props.token, artistSpotifyId).then((tops)=>{
+//       this.setState({
+//         artistImg: artist.images[0].url,
+//         topTracks: tops.tracks,
+//         artistSpotifyId: artistSpotifyId
+//       })
+//     })
+//   })
+// }

@@ -1,12 +1,13 @@
 import React ,{ Component } from 'react'
+import { connect } from 'react-redux'
 
-export default class InfoWrapper extends Component {
+class InfoWrapper extends Component {
   constructor(props){
     super(props)
   }
-  
+
   render(){
-    const displayTopTracks = this.props.topTracks.map((track)=><div className='top-track-item'>{track.name}</div>)
+    const displayTopTracks = this.props.artistInfo.topTracks.map((track)=><div className='top-track-item'>{track.name}</div>)
     return (
       <div className = 'InfoWrapper col-md-3'>
         <div className='row'>
@@ -16,7 +17,7 @@ export default class InfoWrapper extends Component {
         </div>
         <div className='row'>
           <div className='info-img-wrap col-md-12'>
-            <img className='info-img' src={this.props.artistImg} height='100%'/>
+            <img className='info-img' src={this.props.artistInfo.artistImg} height='100%'/>
           </div>
         </div>
         <div className='row'>
@@ -31,3 +32,9 @@ export default class InfoWrapper extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {artistInfo:state.artistInfo}
+}
+
+export default connect(mapStateToProps)(InfoWrapper)

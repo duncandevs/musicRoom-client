@@ -18,9 +18,9 @@ const defaultState = {
   spotifyWebApi: spotifyWebApi(),
   event: {},
   playlist:{},
-  searchTracks: []
+  searchTracks: [],
+  artistInfo: {topTracks:[],artistImg:'', artistSpotifyId:''}
 }
-
 const reducer = (state=defaultState, action) => {
   switch(action.type) {
     case 'ADD_NEW_CHAT_MSG':
@@ -49,8 +49,10 @@ const reducer = (state=defaultState, action) => {
       return updateObject(state,{token:action.payload.token})
 
     case 'ADD_NEW_GUEST_USER':
-      console.log('adding a new guest user: ', action.payload.user)
       return updateObject(state,{user:action.payload.user})
+
+    case 'UPDATE_ARTIST_INFO':
+      return updateObject(state,{artistInfo: action.payload})
 
     default:
       return state

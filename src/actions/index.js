@@ -37,7 +37,6 @@ export function fetchChatMessages(eventId){
 export function setUser(path){
   return function(dispatch) {
     helpers.getUser(path).then(res => {
-      console.log('actions fetch user: ', res)
       dispatch({type:'FETCH_USER', payload:{user:res.data}})
     })
   }
@@ -53,7 +52,6 @@ export function setToken(id){
 
 export function handleNewTracks(tracks){
   return function(dispatch){
-    console.log('tracks dispatch: ', tracks)
     dispatch({type:'ADD_SEARCH_TRACKS',payload:{tracks:tracks}})
   }
 }
@@ -61,5 +59,20 @@ export function handleNewTracks(tracks){
 export function dispatchNewGuestUser(user){
   return function(dispatch){
     dispatch({type:'ADD_NEW_GUEST_USER',payload:{user:user}})
+  }
+}
+
+export function updateArtistInfo(params){
+  return function(dispatch){
+    helpers.getArtistsInfoByArtistId(params.token,params.artistSpotifyId).then((artist)=>{
+      helpers.getArtistTopTracks(params.token, params.artistSpotifyId).then((topTracks)=>{
+        dispatch({type:'UPDATE_ARTIST_INFO',
+          payload: {
+            aritstImg:artist.images[0].url,
+            topTracks:topTracks.tracks,
+            artistSpotifyId:params.artistSpotifyId
+          }
+        })
+    })})
   }
 }
