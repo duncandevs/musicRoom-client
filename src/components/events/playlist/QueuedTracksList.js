@@ -1,9 +1,10 @@
 import React from 'react'
 import QueuedTrack from './QueuedTrack'
+import { connect } from 'react-redux'
 
-export default function QueuedTracksList(props) {
-  const displayTracks = props.tracks.map((track)=>{
-    return <QueuedTrack track={track} reOrderTracks={props.reOrderTracks}/>
+function QueuedTracksList(props){
+  const displayTracks = props.queuedTracks.map((track)=>{
+    return <QueuedTrack track={track}/>
   })
   return (
     <div className='row'>
@@ -21,3 +22,8 @@ export default function QueuedTracksList(props) {
    </div>
   )
 }
+const mapStateToProps = (state)=> {
+  return {queuedTracks: state.queuedTracks}
+}
+
+export default connect(mapStateToProps)(QueuedTracksList)

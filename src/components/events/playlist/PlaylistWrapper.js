@@ -13,9 +13,6 @@ class PlaylistWrapper extends Component {
   constructor(props){
     super(props)
     this.state = {
-      queuedTracks: [],
-      playlist: {},
-      token: '',
       searching: false,
       initialTracksSet: false
     }
@@ -28,27 +25,12 @@ class PlaylistWrapper extends Component {
   }
 
   orderTracks(tracks){
-    this.setState({
-      queuedTracks: tracks.sort((a,b) => b.voteCount - a.voteCount)
-    })
-  }
-
-  reOrderTracks(track){
-    var reOrderedTracks = this.state.queuedTracks.map((item)=>item.id === track.id ? track : item)
+    return tracks.sort((a,b) => b.voteCount - a.voteCount)
   }
 
   setInitialQueuedTracks(){
      getEventTracksFromDB(this.props.event.id).then((res)=>{
-      this.orderTracks(res.data)
-    })
-  }
-
-  addTrackToQueuedTracksList(track){
-    this.props.newArtistSpotifyId(track.artistSpotifyId)
-    addTrackToDB(track).then((res)=>{
-      this.setState({
-        queuedTracks: [...this.state.queuedTracks,res.data]
-      })
+      this.props.setInitialQueuedTracks(this.orderTracks(res.data))
     })
   }
 
@@ -59,20 +41,13 @@ class PlaylistWrapper extends Component {
 
     this.setInitialQueuedTracks()
     this.setState({
-      playlist: {
-        playlistUri:  playlist.embed_uri,
-        user_id: playlist.user_id,
-        spotifyPlaylistId: playlist.spotifyId,
-        spotifyUserId: playlist.embed_uri.split(':')[2]
-      },
-      token: token,
       initialTracksSet: true
     })
   }
 
   getDevices(token){
     getMyDevices(token).then((res)=>{
-      console.log('my devices: ',res)
+      // console.log('my devices: ',res)
     })
   }
 
@@ -89,9 +64,9 @@ class PlaylistWrapper extends Component {
     const queuePath = eventsPath + '/queue'
     const display = ()=>{
       if(this.state.searching == false){
-        return  <PlaylistQueueContainer queuedTracks={this.state.queuedTracks} reOrderTracks={this.reOrderTracks.bind(this)}/>
+        return  <PlaylistQueueContainer/>
       } else {
-        return <PlaylistSearchContainer playlist={this.state.playlist} token={this.state.token} addTrackToQueuedTracksList={this.addTrackToQueuedTracksList.bind(this)} toggleSearch={this.toggleSearch.bind(this)}/>
+        return <PlaylistSearchContainer toggleSearch={this.toggleSearch.bind(this)}/>
       }
     }
     return (

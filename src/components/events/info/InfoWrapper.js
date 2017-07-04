@@ -17,6 +17,7 @@ class InfoWrapper extends Component {
         </div>
         <div className='row'>
           <div className='info-img-wrap col-md-12'>
+            {console.log('artist info: ',this.props.artistInfo.artistImg)}
             <img className='info-img' src={this.props.artistInfo.artistImg} height='100%'/>
           </div>
         </div>

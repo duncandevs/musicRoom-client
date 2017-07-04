@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import {createUserPlaylist} from '../Helpers'
+import {connect} from 'react-redux'
+import * as actions from '../../actions'
 
-export default class EventForm extends Component {
+class EventForm extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -41,9 +43,8 @@ export default class EventForm extends Component {
       return res.data
     }).then((event)=>{
       let playlistName = event.name + event.id.toString()
-      createUserPlaylist('dmaina92', sessionStorage.token, playlistName).then((res)=>{
-        console.log('user playlist: ', res)
-        //  replace 'sessionStorage' with somrthing like this.props.user.id
+      console.log('user spotifyUserId: ', this.props.spotifyUserId)
+      createUserPlaylist(this.props.spotifyUserId, this.props.token, playlistName).then((res)=>{
         this.createPlaylistDBEntry({spotifyId: res.id,event_id:event.id,user_id:sessionStorage.id, embed_uri:res.uri})
       })
     })
@@ -71,3 +72,8 @@ export default class EventForm extends Component {
     )
   }
 }
+const mapStateToProps = (state)=>{
+  return {spotifyUserId: state.spotifyUserId, token:state.token}
+}
+
+export default connect(mapStateToProps,actions)(EventForm)

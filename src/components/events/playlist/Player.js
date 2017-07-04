@@ -8,14 +8,14 @@ class Player extends Component {
     this.spotifyApi = new SpotifyWebApi();
     this.spotifyApi.setAccessToken(sessionStorage.token);
   }
-  //get the playlist id of the correct playlist -> from event
 
   play(){
-    this.spotifyApi.play({device_id:this.props.device_id,context_uri:`spotify:user:${this.props.spotifyUserId}:playlist:${this.props.event.playlists[0].spotifyId}`})
+    console.log('in play device id: ', this.props.device)
+    this.spotifyApi.play({device_id:this.props.device,context_uri:`spotify:user:${this.props.spotifyUserId}:playlist:${this.props.event.playlists[0].spotifyId}`})
   }
 
   pause(){
-    this.spotifyApi.pause({device_id:this.props.device_id})
+    this.spotifyApi.pause({device_id:this.props.device})
   }
 
   render(){
@@ -33,7 +33,7 @@ class Player extends Component {
 }
 
 const mapStateToProps = (state)=> {
-  return {event:state.event, device_id: state.device_id, spotifyUserId: state.spotifyUserId, spotifyPlaylistId:state.spotifyPlaylistId}
+  return {event:state.event, device: state.device, spotifyUserId: state.spotifyUserId, spotifyPlaylistId:state.spotifyPlaylistId}
 }
 
 export default connect(mapStateToProps)(Player)

@@ -22,6 +22,8 @@ export function fetchEvent(path){
     axios('http://localhost:3000'+path).then( res => {
       dispatch({type:'SET_EVENT_HOST',payload:{eventHost:res.data.eventHost}});
       dispatch({type:'FETCH_EVENT', payload:{event:res.data}});
+      dispatch({type:'SET_SPOTIFY_PLAYLIST_ID', payload:res.data.playlists[0].spotifyId})
+      dispatch({type:'SET_SPOTIFY_USER_ID',payload:res.data.playlists[0].embed_uri.split(':')[2]})
     })
   }
 }
@@ -68,11 +70,46 @@ export function updateArtistInfo(params){
       helpers.getArtistTopTracks(params.token, params.artistSpotifyId).then((topTracks)=>{
         dispatch({type:'UPDATE_ARTIST_INFO',
           payload: {
-            aritstImg:artist.images[0].url,
+            artistImg:artist.images[0].url,
             topTracks:topTracks.tracks,
             artistSpotifyId:params.artistSpotifyId
           }
         })
     })})
+  }
+}
+
+export function addTrackToQueuedTracksList(track){
+  return function(dispatch){
+    dispatch({type:'ADD_TRACK_TO_QUEUEDTRACKLIST',payload:track})
+  }
+}
+
+export function setInitialQueuedTracks(tracks){
+  return function(dispatch){
+    dispatch({type: 'SET_INITIAL_QUEUED_TRACKS',payload: tracks})
+  }
+}
+
+export function setDevice(user_id){
+  return function(dispatch){
+    helpers.getDeviceFromDB(user_id).then((res)=>{
+      dispatch({type:'SET_DEVICE',payload:res.data.deviceId})
+    })
+  }
+}
+
+export function setSpotifyUserId(user_id){
+  return function(dispatch){
+    helpers.getSpotifyUserFromDB(user_id).then((res)=>{
+      dispatch({type:'SET_SPOTIFY_USER_ID',payload:res.data.spotifyUserId})
+    })
+  }
+}
+
+export function clearEvent(){
+  return function(dispatch){
+    dispatch({type:'CLEAR_EVENT'})
+    dispatch({type:'CLEAR_ARTIST_INFO'})
   }
 }

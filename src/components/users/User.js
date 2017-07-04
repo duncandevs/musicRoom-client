@@ -7,7 +7,7 @@ import Event from '../events/Event'
 import EventsList from '../events/EventsList'
 import Token from '../Token'
 import LoginSpotify from '../LoginSpotify'
-import { getToken, isLoggedin, getTrack, getUserPlaylists, createUserPlaylist, addTracksToPlaylist} from '../Helpers'
+import {isLoggedin, setSpotifyScopes, getToken} from '../Helpers'
 import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
@@ -25,7 +25,7 @@ class User extends Component {
 
   getUser(subUrl){
     return axios({
-      url: `http://localhost:3000${subUrl}`, //subUrl = user/:user_id
+      url: `http://localhost:3000${subUrl}`,
       method: 'get'
     })
   }
@@ -64,13 +64,15 @@ class User extends Component {
   }
 
   componentWillMount(){
+    this.setState({user_id:this.props.match.url})
     this.isLoggedin()
   }
 
   componentDidMount(){
-    //TODO: set the user properties using redux
-    // this.props.setUser(this.props.match.url)
-
+    const userID = this.state.user_id.split('/')[2]
+    this.props.setSpotifyUserId(userID)
+    this.props.setToken(userID)
+    
     this.getUser(this.props.match.url).then((res)=>{
       this.setUserState(res.data)
       return res.data.id
@@ -79,21 +81,10 @@ class User extends Component {
         this.setEventsState(res.data)
       })
     })
-
-    // getToken(sessionStorage.id).then((res) => {
-    //   sessionStorage.token = res.data.token
-    // })
   }
 
   render(){
-    const scopes = 'playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative user-read-recently-played user-read-private streaming user-modify-playback-state user-read-playback-state'
-    const client_id = 'd2a6a11d756a4c4da594170cd80f425e'
-    const redirect_uri = 'http://localhost:3000/spotify'
-    const path = 'https://accounts.spotify.com/authorize' +
-      '?response_type=code' +
-      '&client_id=' + client_id +
-      (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
-      '&redirect_uri=' + encodeURIComponent(redirect_uri)
+    const path = setSpotifyScopes()
     const userDisplay =
           <div>
             <div className='user-spotify-login'><a href = { path } >login to spotify</a></div>
@@ -114,4 +105,8 @@ class User extends Component {
   }
 }
 
-export default withRouter(connect(()=>{},actions)(User))
+const mapStateToProps = (state)=>{
+  return {device: state}
+}
+
+export default withRouter(connect(mapStateToProps,actions)(User))

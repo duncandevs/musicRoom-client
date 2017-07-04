@@ -35,14 +35,20 @@ class Event extends Component {
     this.updateInfo(id)
   }
 
+  componentWillMount(){
+    this.props.clearEvent()
+  }
+
   componentDidMount(){
     this.props.fetchEvent(this.props.match.url)
   }
 
   componentDidUpdate(){
     if(this.props.token == '' || this.props.token == null || this.props.token == undefined){
-      if(this.props.eventHost != {}){
+      if(this.props.eventHost.id != undefined){
+        console.log('eventHost: ', this.props.eventHost)
         this.props.setToken(this.props.eventHost.id)
+        this.props.setDevice(this.props.eventHost.id)
       }
     } else {
       sessionStorage.token = this.props.token

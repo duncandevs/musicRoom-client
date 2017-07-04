@@ -37,7 +37,6 @@ export function addInvitedUser(params){
 }
 
 export function addTrackToDB(track){
-  console.log('track in add to db: ', track)
   return axios({
     url: 'http://localhost:3000/tracks',
     method: 'post',
@@ -99,6 +98,36 @@ export function setTrackUnVote(id, user){
   })
 }
 
+export function setDeviceInDB(deviceId,user_id){
+  return axios({
+    url: `http://localhost:3000/users/${user_id}/devices`,
+    method:'post',
+    data: {
+      user_id: user_id,
+      deviceId: deviceId
+    }
+  })
+}
+
+export function getDeviceFromDB(user_id){
+  return axios({url: `http://localhost:3000/users/${user_id}/devices`})
+}
+
+export function setSpotifyUserInDB(spotifyUserId,user_id){
+  return axios({
+    url: `http://localhost:3000/users/${user_id}/spotifys`,
+    method:'post',
+    data: {
+      spotifyUserId: spotifyUserId
+    }
+  })
+}
+
+export function getSpotifyUserFromDB(user_id){
+  return axios({url: `http://localhost:3000/users/${user_id}/spotifys`})
+}
+
+
 export function getTrack(queryTerm,token){
   var spotifyApi = new SpotifyWebApi();
   spotifyApi.setAccessToken(token);
@@ -144,6 +173,12 @@ export function getMyDevices(token){
   return spotifyApi.getMyDevices()
 }
 
+export function getSpotifyUser(token){
+  var spotifyApi = new SpotifyWebApi();
+  spotifyApi.setAccessToken(token)
+  return spotifyApi.getMe()
+}
+
 export function play(token,options){
   var spotifyApi = new SpotifyWebApi();
   spotifyApi.setAccessToken(token);
@@ -180,4 +215,16 @@ export function getArtistTopTracks(token,artistId){
   var spotifyApi = new SpotifyWebApi();
   spotifyApi.setAccessToken(token);
   return spotifyApi.getArtistTopTracks(artistId,'US')
+}
+
+export function setSpotifyScopes(){
+  const scopes = 'playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative user-read-recently-played user-read-private streaming user-modify-playback-state user-read-playback-state'
+  const client_id = 'd2a6a11d756a4c4da594170cd80f425e'
+  const redirect_uri = 'http://localhost:3000/spotify'
+  const path = 'https://accounts.spotify.com/authorize' +
+    '?response_type=code' +
+    '&client_id=' + client_id +
+    (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+    '&redirect_uri=' + encodeURIComponent(redirect_uri)
+  return path
 }

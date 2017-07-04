@@ -11,7 +11,7 @@ export default class PlaylistSearchContainer extends Component {
   render(){
     return (
       <div>
-        <TrackSearchList playlist={this.props.playlist} token={this.props.token} addTrackToQueuedTracksList={this.props.addTrackToQueuedTracksList}/>
+        <TrackSearchList playlist={this.props.playlist} addTrackToQueuedTracksList={this.props.addTrackToQueuedTracksList}/>
       </div>
     )
   }

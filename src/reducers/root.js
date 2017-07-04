@@ -10,16 +10,17 @@ const defaultState = {
   messages: [],
   eventId: '',
   userId: 2,
-  device_id2: 'a93dffbf0f4cb9c8c4e2908861376ca989034d17',
   device_id:'1cfbddd7dbf29d1f655f4f1f2e0a2c4734d2553e',
-  spotifyUserId: 'dmaina92',
-  spotifyPlaylistId: '7yqbEs3LFlkorYW7IYbaQJ',
+  device:'',
+  spotifyUserId: '',
+  spotifyPlaylistId: '',
   token:'',
   spotifyWebApi: spotifyWebApi(),
   event: {},
   playlist:{},
   searchTracks: [],
-  artistInfo: {topTracks:[],artistImg:'', artistSpotifyId:''}
+  artistInfo: {topTracks:[],artistImg:'', artistSpotifyId:''},
+  queuedTracks: []
 }
 const reducer = (state=defaultState, action) => {
   switch(action.type) {
@@ -35,6 +36,12 @@ const reducer = (state=defaultState, action) => {
 
     case 'FETCH_PLAYLIST':
       return updateObject(state,{playlist:action.payload.playlist})
+
+    case 'SET_SPOTIFY_PLAYLIST_ID':
+      return updateObject(state,{spotifyPlaylistId:action.payload})
+
+    case 'SET_SPOTIFY_USER_ID':
+      return updateObject(state,{spotifyUserId:action.payload})
 
     case 'FETCH_USER':
       return updateObject(state,{user:action.payload.user})
@@ -53,6 +60,22 @@ const reducer = (state=defaultState, action) => {
 
     case 'UPDATE_ARTIST_INFO':
       return updateObject(state,{artistInfo: action.payload})
+
+    case 'ADD_TRACK_TO_QUEUEDTRACKLIST':
+      var newTracks = addItemInArray(state.queuedTracks,action.payload)
+      return updateObject(state,{queuedTracks: newTracks})
+
+    case 'SET_INITIAL_QUEUED_TRACKS':
+      return updateObject(state,{queuedTracks:action.payload})
+
+    case 'SET_DEVICE':
+      return updateObject(state,{device:action.payload})
+
+    case 'CLEAR_EVENT':
+      return updateObject(state,{event:{}})
+
+    case 'CLEAR_ARTIST_INFO':
+      return updateObject(state,{artistInfo: {topTracks:[],artistImg:'', artistSpotifyId:''}})
 
     default:
       return state
