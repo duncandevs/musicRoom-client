@@ -30,7 +30,7 @@ class PlaylistWrapper extends Component {
 
   setInitialQueuedTracks(){
      getEventTracksFromDB(this.props.event.id).then((res)=>{
-      this.props.setInitialQueuedTracks(this.orderTracks(res.data))
+      this.props.setInitialQueuedTracks(res.data)
     })
   }
 

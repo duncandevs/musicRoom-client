@@ -43,7 +43,6 @@ class EventForm extends Component {
       return res.data
     }).then((event)=>{
       let playlistName = event.name + event.id.toString()
-      console.log('user spotifyUserId: ', this.props.spotifyUserId)
       createUserPlaylist(this.props.spotifyUserId, this.props.token, playlistName).then((res)=>{
         this.createPlaylistDBEntry({spotifyId: res.id,event_id:event.id,user_id:sessionStorage.id, embed_uri:res.uri})
       })
@@ -61,12 +60,10 @@ class EventForm extends Component {
 
   render(){
     return (
-      <div>
-        <p> create a new event </p>
+      <div className='event-form'>
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <div><label>name your event</label></div>
-          <input type = 'text' onChange = {this.handleChange.bind(this)} value = {this.state.name}/>
-          <input type = 'submit' onSubmit = {this.handleSubmit.bind(this)} className='btn btn-primary new-event-btn' value='create'/>
+          <input type = 'text' onChange = {this.handleChange.bind(this)} value = {this.state.name} className='new-event-input'/>
+          <input type = 'submit' onSubmit = {this.handleSubmit.bind(this)} className='btn btn-primary new-event-btn' value='new room'/>
         </form>
       </div>
     )

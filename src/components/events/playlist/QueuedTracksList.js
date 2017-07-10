@@ -9,7 +9,7 @@ function QueuedTracksList(props){
   return (
     <div className='row'>
       <div className='QueuedTracksList'>
-        <table>
+        <table className='table-entry'>
           <tr>
               <th>TITLE</th>
               <th>ARTIST</th>

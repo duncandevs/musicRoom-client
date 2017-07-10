@@ -68,9 +68,3 @@ class Token extends Component {
 }
 
 export default connect(state=>state,actions)(withRouter(Token))
-
-// .then(
-//   getUserProfile(token).then((res)=>{
-//     this.createUserProfileID(res.id).then((res)=> console.log(res))
-//   })
-// )

@@ -72,9 +72,10 @@ class User extends Component {
     const userID = this.state.user_id.split('/')[2]
     this.props.setSpotifyUserId(userID)
     this.props.setToken(userID)
-    
+
     this.getUser(this.props.match.url).then((res)=>{
       this.setUserState(res.data)
+      this.props.setUser(res.data)
       return res.data.id
     }).then((user_id)=>{
       this.getEvents(user_id).then((res)=>{
@@ -87,14 +88,11 @@ class User extends Component {
     const path = setSpotifyScopes()
     const userDisplay =
           <div>
-            <div className='user-spotify-login'><a href = { path } >login to spotify</a></div>
+            <div>{this.state.name}</div>
+            <div>@{this.state.username}</div>
+            <button className='user-spotify-login btn btn-success'><a href = { path } ><span className='spotify-login-btn-text'>login to spotify</span></a></button>
+            <EventForm user_id={this.state.user_id} handleNewEvent = {this.handleNewEvent.bind(this)}/>
             <EventsList events={this.state.events}/>
-            <Link to={`/users/${this.state.user_id}/events/new`}><p>new event</p></Link>
-            <Switch>
-              <Route path='/users/:user_id/events/new' render={(user_id)=>
-                <EventForm user_id={this.state.user_id} handleNewEvent = {this.handleNewEvent.bind(this)}/>} />
-              <Route path = '/users/loginspotify' render = {() => <LoginSpotify/>}/>
-            </Switch>
           </div>
 
     return (
@@ -106,7 +104,7 @@ class User extends Component {
 }
 
 const mapStateToProps = (state)=>{
-  return {device: state}
+  return {device: state, user:state.user}
 }
 
 export default withRouter(connect(mapStateToProps,actions)(User))

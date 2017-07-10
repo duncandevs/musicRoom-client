@@ -9,7 +9,6 @@ const defaultState = {
   eventHost: {},
   messages: [],
   eventId: '',
-  userId: 2,
   device_id:'1cfbddd7dbf29d1f655f4f1f2e0a2c4734d2553e',
   device:'',
   spotifyUserId: '',
@@ -20,7 +19,9 @@ const defaultState = {
   playlist:{},
   searchTracks: [],
   artistInfo: {topTracks:[],artistImg:'', artistSpotifyId:''},
-  queuedTracks: []
+  queuedTracks: [],
+  infotoggle: false,
+  playing:{}
 }
 const reducer = (state=defaultState, action) => {
   switch(action.type) {
@@ -45,6 +46,9 @@ const reducer = (state=defaultState, action) => {
 
     case 'FETCH_USER':
       return updateObject(state,{user:action.payload.user})
+
+    case 'SET_USER':
+      return updateObject(state,{user:action.payload})
 
     case 'ADD_SEARCH_TRACKS':
       return updateObject(state,{searchTracks:action.payload.tracks})
@@ -76,6 +80,18 @@ const reducer = (state=defaultState, action) => {
 
     case 'CLEAR_ARTIST_INFO':
       return updateObject(state,{artistInfo: {topTracks:[],artistImg:'', artistSpotifyId:''}})
+
+    case 'INFO_TOGGLE':
+      return updateObject(state,{infotoggle:true})
+
+    case 'SET_PLAYING_TRACK':
+      return updateObject(state,{playing:action.payload})
+
+    case 'CLEAR_PLAYING_TRACK':
+      return updateObject(state,{playing:{}})
+
+    case 'CLEAR_QUEUD_TRACKS':
+      return updateObject(state,{queuedTracks:[]})
 
     default:
       return state

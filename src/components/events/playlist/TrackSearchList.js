@@ -7,7 +7,7 @@ function TrackSearchList(props) {
   return (
     <div className='row'>
       <div className='searchlist-container'>
-        <table>
+        <table className='table-entry'>
           <tr>
               <th>TITLE</th>
               <th>ARTIST</th>

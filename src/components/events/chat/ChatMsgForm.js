@@ -2,6 +2,7 @@ import React , {Component} from 'react'
 import { connect } from 'react-redux'
 import { addChatMsgToDB } from '../../Helpers'
 import {withRouter} from 'react-router-dom'
+import * as actions from '../../../actions'
 
 class ChatMsgForm extends Component {
   constructor(){
@@ -18,17 +19,15 @@ class ChatMsgForm extends Component {
   }
 
   handleSubmit(e){
+    var eventId = this.props.event.id
+    var userId = this.props.event.eventHost.id
+    var message = e.target.msg.value
     e.preventDefault()
-    this.props.dispatchNewChatMessage(e.target.msg.value)
-    this.submitChatMsgToDB(e.target.msg.value)
+    this.props.newChatMessage(message)
+    addChatMsgToDB({message:message,userId:userId,eventId:eventId})
     this.setState({
       message: ''
     })
-  }
-
-  submitChatMsgToDB(message){
-    let eventId = this.props.match.url.split('/')[2]
-    addChatMsgToDB({message:message, eventId:eventId, userId:this.props.user.id})
   }
 
   render(){
@@ -43,13 +42,7 @@ class ChatMsgForm extends Component {
 }
 
 const mapStateToProps = (state)=>{
-  return {eventId:state.eventId, user:state.user}
+  return {event:state.event, user:state.user}
 }
 
-const mapDispatchToProps = (dispatch)=>{
-  return {
-    dispatchNewChatMessage: (message)=> dispatch({type: 'ADD_NEW_CHAT_MSG',message:message })
-  }
-}
-
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(ChatMsgForm))
+export default withRouter(connect(mapStateToProps,actions)(ChatMsgForm))

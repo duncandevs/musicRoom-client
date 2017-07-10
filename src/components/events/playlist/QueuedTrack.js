@@ -1,7 +1,10 @@
 import React , { Component } from 'react'
 import axios  from 'axios'
 import { setTrackVote , setTrackUnVote} from '../../Helpers'
-export default class QueuedTrack extends Component {
+import { connect } from 'react-redux'
+import * as actions from '../../../actions'
+
+class QueuedTrack extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -16,7 +19,7 @@ export default class QueuedTrack extends Component {
       votes: this.state.votes + 1,
       voted: true
     })
-    setTrackVote(this.props.track.id, sessionStorage.id).then((res)=>this.props.reOrderTracks(res.data))
+    setTrackVote(this.props.track.id,this.props.eventHost.id)
   }
 
   handleUnvoteTrack(){
@@ -24,18 +27,19 @@ export default class QueuedTrack extends Component {
       votes: this.state.votes - 1,
       voted: false
     })
-    setTrackUnVote(this.props.track.id, sessionStorage.id).then((res)=>this.props.reOrderTracks(res.data))
+    setTrackUnVote(this.props.track.id, this.props.eventHost.id).then((res)=>{console.log('track unvote: ', res.data)})
   }
 
   hasUserVoted(votes,userId){
     if(votes.length != 0){
-      return !!votes.find((vote) => vote.user_id = userId)
+      return votes.find((vote) => vote.user_id == userId && vote.vote == true)
     } else {
       return false
     }
   }
 
   componentDidMount(){
+    console.log(this.props.track.votes)
     this.setState({
       voted: this.hasUserVoted(this.props.track.votes, this.state.userId)
     })
@@ -56,9 +60,8 @@ export default class QueuedTrack extends Component {
   }
 }
 
-//persist the voted in the db
-//make a request to the the db to vote or unvote
-//whats the route
+const mapStateToProps = (state)=>{
+  return {eventHost: state.event.eventHost}
+}
 
-
-//:TODO a non-logged in user should have an id
+export default connect(mapStateToProps,actions)(QueuedTrack)

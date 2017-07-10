@@ -2,7 +2,7 @@ import React , { Component } from 'react'
 import { Route } from 'react-router-dom'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
-import { getToken, getArtistsInfoByArtistId, getArtistTopTracks } from '../Helpers'
+import { getToken, getArtistsInfoByArtistId, getArtistTopTracks, getMyCurrentPlaybackState } from '../Helpers'
 import InfoWrapper from './info/InfoWrapper'
 import PlaylistWrapper from './playlist/PlaylistWrapper'
 import ChatWrapper from './chat/ChatWrapper'
@@ -13,29 +13,16 @@ class Event extends Component {
   constructor(props){
     super(props)
     this.state = {
-      artistSpotifyId:'',
-      artistImg: '',
-      topTracks: []
+      mobile: false
     }
   }
 
-  updateInfo(artistSpotifyId){
-    getArtistsInfoByArtistId(this.props.token,artistSpotifyId).then((artist)=>{
-      getArtistTopTracks(this.props.token, artistSpotifyId).then((tops)=>{
-        this.setState({
-          artistImg: artist.images[0].url,
-          topTracks: tops.tracks,
-          artistSpotifyId: artistSpotifyId
-        })
-      })
-    })
-  }
-
-  newArtistSpotifyId(id){
-    this.updateInfo(id)
-  }
-
   componentWillMount(){
+    if(window.innerWidth < 400){
+      this.setState({
+        mobile: true
+      })
+    }
     this.props.clearEvent()
   }
 
@@ -46,7 +33,6 @@ class Event extends Component {
   componentDidUpdate(){
     if(this.props.token == '' || this.props.token == null || this.props.token == undefined){
       if(this.props.eventHost.id != undefined){
-        console.log('eventHost: ', this.props.eventHost)
         this.props.setToken(this.props.eventHost.id)
         this.props.setDevice(this.props.eventHost.id)
       }
@@ -56,11 +42,11 @@ class Event extends Component {
   }
 
   render(){
+    const displayWeb = <div><InfoWrapper/><PlaylistWrapper/><ChatWrapper/></div>
+    const displayMobile = <div><PlaylistWrapper/></div>
     return (
       <div className='EventWrapper'>
-        <InfoWrapper artistSpotifyId={this.state.artistSpotifyId} artistImg={this.state.artistImg} topTracks={this.state.topTracks}/>
-        <PlaylistWrapper newArtistSpotifyId={this.newArtistSpotifyId.bind(this)}/>
-        <ChatWrapper/>
+        {this.state.mobile ? displayMobile : displayWeb}
       </div>
     )
   }

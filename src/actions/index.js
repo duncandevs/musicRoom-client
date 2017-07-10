@@ -36,11 +36,20 @@ export function fetchChatMessages(eventId){
   }
 }
 
-export function setUser(path){
-  return function(dispatch) {
-    helpers.getUser(path).then(res => {
-      dispatch({type:'FETCH_USER', payload:{user:res.data}})
-    })
+export function newChatMessage(message){
+  return function(dispatch){
+    dispatch({type: 'ADD_NEW_CHAT_MSG',message:message })
+  }
+}
+
+export function setUser(params){
+  // return function(dispatch) {
+  //   helpers.getUser(path).then(res => {
+  //     dispatch({type:'FETCH_USER', payload:{user:res.data}})
+  //   })
+  // }
+  return function(dispatch){
+    dispatch({type: 'SET_USER',payload:{username:params.username,name:params.name,id:params.id}})
   }
 }
 
@@ -111,5 +120,19 @@ export function clearEvent(){
   return function(dispatch){
     dispatch({type:'CLEAR_EVENT'})
     dispatch({type:'CLEAR_ARTIST_INFO'})
+    dispatch({type:'CLEAR_PLAYING_TRACK'})
+    dispatch({type:'CLEAR_QUEUD_TRACKS'})
+  }
+}
+
+export function infotoggle(){
+  return function(dispatch){
+    dispatch({type:'INFO_TOGGLE'})
+  }
+}
+
+export function setPlayingTrack(track){
+  return function(dispatch){
+    dispatch({type:'SET_PLAYING_TRACK',payload:track})
   }
 }

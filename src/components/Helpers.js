@@ -228,3 +228,9 @@ export function setSpotifyScopes(){
     '&redirect_uri=' + encodeURIComponent(redirect_uri)
   return path
 }
+
+export function getMyCurrentPlaybackState(token){
+  var spotifyApi = new SpotifyWebApi();
+  spotifyApi.setAccessToken(token);
+  return spotifyApi.getMyCurrentPlaybackState()
+}

@@ -13,6 +13,7 @@ function SearchTrack(props){
     addTrackToDB(track).then((res) => {
       props.addTrackToQueuedTracksList(res.data)
     })
+    props.infotoggle()
   }
 
   return (

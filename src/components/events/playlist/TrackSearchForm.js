@@ -49,7 +49,7 @@ class TrackSearchForm extends Component {
       <div className='row'>
         <div className='search-container col-md-12'>
           <form onSubmit={this.handleSubmit.bind(this)}>
-            <input className='search-input' value={this.state.queryTerm} onChange={this.handleChange.bind(this)} placeholder='songs, artists, and albums'/>
+            <input className='search-input' value={this.state.queryTerm} onChange={this.handleChange.bind(this)} placeholder='search songs, artists, and albums...'/>
             <input type='submit' value='search' className='btn btn-success'/>
           </form>
         </div>
