@@ -7,7 +7,13 @@ class InfoWrapper extends Component {
   }
 
   render(){
-    const displayTopTracks = this.props.artistInfo.topTracks.map((track)=><div className='top-track-item'>{track.name}</div>)
+    const displayTopTracks = this.props.artistInfo.topTracks.map((track)=>{
+      console.log('most popular tracks: ',track.album.images[2].url)
+      return <div className='row top-track-item'>
+              <img className='top-track' src={track.album.images[2].url} alt=""/>
+              <div className='top-track top-track-name'>{track.name}</div>
+            </div>
+    })
     const displaySpotifyInfo = <div className = 'InfoWrapper col-md-3'>
       <div className='row'>
         <div className='leftnavlogo col-md-12'>

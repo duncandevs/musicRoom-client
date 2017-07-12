@@ -35,14 +35,14 @@ body{
   padding:5px;
   border-radius:10px;
   margin-bottom:10px;
-  background-color:#EEEEEE;
+  background-color:white;
 }
 .event-list-rightPanel{
   margin-top:10px;
   /*background-color:purple;*/
 }
 .event-list-title{
-  color:white;
+  color:black;
 }
 .event-list-people{
   float:right;
@@ -53,7 +53,7 @@ body{
   margin-top:2px;
   margin-left:5px;
   padding-top:10px;
-  color:white;
+  color:black;
 }
 /*Info Section*/
 .InfoWrapper{
@@ -63,7 +63,7 @@ body{
   border-color:red;
 }
 .SpotifyInfoBanner{
-  height: 806px;
+  height: 906px;
   background-color: black;
 }
 .spotify-logo{
@@ -75,7 +75,7 @@ body{
   color: #1ED760;
 }
 .info-content-wrap{
-  height:283px;
+  height:383px;
   overflow-y:auto;
   background-color:black;
 }
@@ -105,7 +105,13 @@ body{
   color:white;
   margin-top:11px;
 }
-
+.top-track{
+  float:left;
+  margin-left:20px;
+}
+.top-track-name{
+  margin-top:15px;
+}
 /*player*/
 .player-container {
   height:300px;
@@ -120,7 +126,7 @@ body{
   float:left;
 }
 .searchlist-container{
-  height:720px;
+  height:820px;
   overflow-y: scroll;
 }
 .addTrackBtn{
@@ -156,14 +162,17 @@ body{
 }
 /*Playlist Section*/
 .PlaylistWrapper{
-  height:805px;
+  height:905px;
   float:left;
   background-color: white;
 }
 /*.queudPlaylist*/
 .QueuedTracksList{
-  height:410px;
+  height:510px;
   overflow-y:scroll;
+}
+.track-vote{
+  margin-right:8px;
 }
 /*<.table styling>*/
 
@@ -186,7 +195,7 @@ background-color: #ecf0f1;
 }
 /*Chat Section*/
 .ChatWrapper{
-  height:805px;
+  height:905px;
   float:left;
   background: rgba(0, 0, 0, 0) linear-gradient(157.504deg, rgb(5, 255, 113) 0%, rgb(15, 239, 255) 100%) repeat scroll 0% 0% / auto padding-box border-box;
   box-shadow: -1px 1px 1px 1px #3A3535;
@@ -204,7 +213,7 @@ background-color: #ecf0f1;
 }
 /*chat styling*/
 .chat-msg-wrapper{
-  height:504px;
+  height:554px;
   padding-top:20px;
   padding-left:12%;
   overflow-y: scroll;
@@ -242,7 +251,7 @@ background-color: #ecf0f1;
 }
 .chat-input{
   width:100%;
-  height:180px;
+  height:230px;
 }
 .chat-username{
   float:left;
@@ -273,6 +282,13 @@ background-color: #ecf0f1;
 .user-spotify-login{
   width:250px;
   margin:10px;
+  margin-left:75px;
+  margin-bottom:40px;
+}
+.user-profile-info{
+  font-weight:bold;
+  float:right;
+  margin-right:20px;
 }
 .spotify-login-btn-text{
   color:white !important;
@@ -298,4 +314,26 @@ background-color: #ecf0f1;
 }
 .login-btn {
   margin-left:150px;
+}
+/*signup form*/
+.signup-form{
+  margin-top:200px;
+}
+/*device*/
+.device-item{
+  width:150px;
+  margin:auto;
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  background-color:white;
+}
+.device-item:hover{
+  width:150px;
+  margin:auto;
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  background-color:gray;
+  color:white;
 }

@@ -16,6 +16,14 @@ class ChatWrapper extends Component {
   componentDidMount(){
     let eventId = this.props.match.url.substring(8)
     this.props.fetchChatMessages(eventId)
+    this.recieveCableMessages()
+  }
+
+  recieveCableMessages(){
+    this.props.cableApp.messages = this.props.cableApp.subscriptions.create('MessagesChannel',
+    {
+      received: (message) => console.log('update state: ', message)
+    })
   }
 
   render(){
@@ -31,7 +39,7 @@ class ChatWrapper extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {cableApp: state.cableApp}
 }
 
 export default withRouter(connect(mapStateToProps,actions)(ChatWrapper))

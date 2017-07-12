@@ -53,15 +53,22 @@ export default class UserForm extends Component {
 
   render(){
     return (
-      <div>
+      <div className = 'signup-form'>
+        <h3>sign up</h3><br></br>
         <form onSubmit = {this.handleSubmit.bind(this)}>
-            <label>name</label>
-            <input name='name' type = 'text' value = {this.state.name} onChange = {this.handleChange.bind(this)} />
-            <label>username</label>
-            <input name = 'username' type = 'text' value = {this.state.username} onChange = {this.handleChange.bind(this)} />
-            <label>password</label>
-            <input name = 'password' type = 'password' value = {this.state.password} onChange = {this.handleChange.bind(this)} />
-            <input type = 'submit' />
+            <div className='form-group'>
+              <label>name</label>
+              <input name='name' type = 'text' value = {this.state.name} onChange = {this.handleChange.bind(this)} />
+            </div>
+            <div className='form-group'>
+              <label>username</label>
+              <input name = 'username' type = 'text' value = {this.state.username} onChange = {this.handleChange.bind(this)} />
+            </div>
+            <div className='form-group'>
+              <label>password</label>
+              <input name = 'password' type = 'password' value = {this.state.password} onChange = {this.handleChange.bind(this)} />
+            </div>
+            <input className='btn btn-submit' type = 'submit' />
         </form>
       </div>
     )

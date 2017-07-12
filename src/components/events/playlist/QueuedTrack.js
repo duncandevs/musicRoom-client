@@ -54,7 +54,7 @@ class QueuedTrack extends Component {
           <td>{track.name}</td>
           <td>{track.artist}</td>
           <td>{track.album.name}</td>
-          <td><span>{this.state.votes}</span><span>{this.state.voted ? unvote : vote}</span></td>
+          <td><span className='track-vote'>{this.state.votes}</span><span>{this.state.voted ? unvote : vote}</span></td>
       </tr>
     )
   }

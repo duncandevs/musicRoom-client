@@ -1,10 +1,15 @@
 import SpotifyWebApi from 'spotify-web-api-js'
+import actionCable from 'actioncable'
+
+const CableApp = {}
+CableApp.cable = actionCable.createConsumer(`ws://${window.location.hostname}:3000/cable`)
 
 const spotifyWebApi = ()=> {
   return new SpotifyWebApi();
 }
 
 const defaultState = {
+  cableApp: CableApp,
   user: {},
   eventHost: {},
   messages: [],

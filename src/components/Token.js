@@ -56,10 +56,12 @@ class Token extends Component {
 
   render(){
     const displayDevices = this.state.devices.map((device)=>{
-      return <div onClick={()=>this.selectDevice(device)}>{device.name}</div>
+      return <div className ='device-item' onClick={()=>this.selectDevice(device)}>
+        {device.name}
+      </div>
     })
     return(
-      <div>
+      <div className=''>
         <div>select device</div>
         <div>{displayDevices}</div>
       </div>

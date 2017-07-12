@@ -17,7 +17,7 @@ export default class EventListItem extends Component {
           <div className='event-list-item row'>
             <h3 className='event-list-title col-md-8'>{name}</h3>
             <div className='event-list-rightPanel col-md-4'>
-              <div className='event-list-attendance'>12</div>
+              <div className='event-list-attendance'>0</div>
               <img src='https://iconmonstr.com/wp-content/g/gd/makefg.php?i=../assets/preview/2012/png/iconmonstr-user-30.png&r=0&g=0&b=0' width='40px' className='event-list-people'/>
             </div>
           </div>

@@ -28,6 +28,11 @@ class ChatMsgForm extends Component {
     this.setState({
       message: ''
     })
+    this.handleMessageCreate(message)
+  }
+
+  handleMessageCreate(msgState) {
+    this.props.cableApp.messages.send({content: msgState.content})
   }
 
   render(){
@@ -42,7 +47,7 @@ class ChatMsgForm extends Component {
 }
 
 const mapStateToProps = (state)=>{
-  return {event:state.event, user:state.user}
+  return {event:state.event, user:state.user, cableApp:state.cableApp}
 }
 
 export default withRouter(connect(mapStateToProps,actions)(ChatMsgForm))

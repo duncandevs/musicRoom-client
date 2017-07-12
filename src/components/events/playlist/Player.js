@@ -24,11 +24,6 @@ class Player extends Component {
     const playback = ()=>{
       if(this.props.token != ''){
         helpers.getMyCurrentPlaybackState(this.props.token).then((res)=>{
-          //set the playing track create a counter
-          console.log('see playing track: ', res)
-          console.log('length of the song: ', res.item.duration_ms)
-          console.log('played this much: ',res.progress_ms)
-          time = res.item.duration_ms - res.progress_ms
           // difference between measure and playing is going to set the timer
           console.log('in playback test timer')
         })
@@ -48,7 +43,7 @@ class Player extends Component {
     if(this.props.queuedTracks.length != 0){
       this.props.setPlayingTrack(this.props.queuedTracks[0])
     }
-    this.getCurrentPlayBackState()
+    // this.getCurrentPlayBackState()
   }
 
   render(){

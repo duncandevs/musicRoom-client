@@ -88,8 +88,10 @@ class User extends Component {
     const path = setSpotifyScopes()
     const userDisplay =
           <div>
-            <div>{this.state.name}</div>
-            <div>@{this.state.username}</div>
+            <div className='row user-profile-info'>
+              <div>{this.state.name}</div>
+              <div>@{this.state.username}</div>
+            </div>
             <button className='user-spotify-login btn btn-success'><a href = { path } ><span className='spotify-login-btn-text'>login to spotify</span></a></button>
             <EventForm user_id={this.state.user_id} handleNewEvent = {this.handleNewEvent.bind(this)}/>
             <EventsList events={this.state.events}/>
