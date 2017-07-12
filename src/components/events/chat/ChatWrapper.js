@@ -11,19 +11,14 @@ import * as actions from '../../../actions'
 class ChatWrapper extends Component {
   constructor(props){
     super(props)
+    this.state = {
+      messages: []
+    }
   }
 
   componentDidMount(){
     let eventId = this.props.match.url.substring(8)
     this.props.fetchChatMessages(eventId)
-    this.recieveCableMessages()
-  }
-
-  recieveCableMessages(){
-    this.props.cableApp.messages = this.props.cableApp.subscriptions.create('MessagesChannel',
-    {
-      received: (message) => console.log('update state: ', message)
-    })
   }
 
   render(){

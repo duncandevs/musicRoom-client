@@ -23,17 +23,32 @@ class ChatMsgForm extends Component {
     var userId = this.props.event.eventHost.id
     var message = e.target.msg.value
     e.preventDefault()
-    this.props.newChatMessage(message)
     addChatMsgToDB({message:message,userId:userId,eventId:eventId})
     this.setState({
       message: ''
     })
-    this.handleMessageCreate(message)
+    this.handleMessageCableReceive()
+    this.handleMessageCableSend(message)
   }
 
-  handleMessageCreate(msgState) {
-    this.props.cableApp.messages.send({content: msgState.content})
+  handleMessageCableSend(message) {
+    this.props.cableApp.messages.send({content: message})
   }
+
+  handleMessageCableReceive(){
+    this.props.cableApp.messages = this.props.cableApp.cable.subscriptions.create('MessagesChannel',
+    {
+      received: (res) => {
+        console.log('cable response message: ', res.message)
+        this.props.newChatMessage(res.message)
+      }
+    })
+  }
+
+  componentDidUpdate(){
+    console.log('updating....')
+  }
+
 
   render(){
     return(
